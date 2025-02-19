@@ -20,7 +20,7 @@ A primeira etapa será o desenvolvimento back-end!
 
 Descrição:
 
-O Objetivo dessa etapa é criar apis para um CRUD de agendamento online onde um usuário pode fazer um ou mais agendamento em uma sala que esteja com horario disponivel. Para auxiliarmos e não tornar o desafio muito extenso, iremos fornecer nesse repositorio uma implementação basica para as rotas de CRUD de usuário e de salas. lembressse que cada usuário tem particularidades de idioma e localidade, que devem ser levadas em consideração no momento de agendamento de cada sala.
+O Objetivo dessa etapa é criar apis para um CRUD de agendamento online onde um usuário pode fazer um ou mais agendamento em uma sala que esteja com horario disponivel. Para auxiliarmos e não tornar o desafio muito extenso, iremos fornecer nesse repositorio uma implementação basica para as rotas de CRUD de usuário e de salas. lembre-se que cada usuário tem particularidades de idioma e localidade, que devem ser levadas em consideração no momento de agendamento de cada sala.
 
 **Obrigatorio**  - Você deverá desenvolver as seguintes rotas em .Net Core(Versão de sua preferencia):
 
