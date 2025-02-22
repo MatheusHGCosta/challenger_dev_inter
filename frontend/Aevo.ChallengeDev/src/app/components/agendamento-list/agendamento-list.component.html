@@ -1,0 +1,22 @@
+<p-table *ngIf="(agendamentos$ | async) as agendamentos" [value]="agendamentos">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Usuário</th>
+        <th>Sala</th>
+        <th>Data</th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-agendamento>
+      <tr>
+        <td>{{ agendamento.usuario }}</td>
+        <td>{{ agendamento.sala }}</td>
+        <td>{{ agendamento.data }}</td>
+        <td>
+          <button pButton label="Editar" routerLink="/editar/{{ agendamento.id }}"></button>
+          <button pButton label="Excluir" (click)="delete(agendamento.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  
