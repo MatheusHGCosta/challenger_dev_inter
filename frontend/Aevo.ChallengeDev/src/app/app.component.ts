@@ -11,8 +11,8 @@ import { HeaderComponent } from './components/header/header.component';
 })
 export class AppComponent {
   constructor(private translate: TranslateService) {
-    this.translate.addLangs(['en', 'pt']);
-    this.translate.setDefaultLang('pt');
-    this.translate.use('pt');
+    this.translate.addLangs(['en-US', 'pt-BR']);
+    this.translate.setDefaultLang('pt-BR');
+    this.translate.use('pt-BR');
   }
 }

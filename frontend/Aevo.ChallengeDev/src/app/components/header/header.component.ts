@@ -14,7 +14,7 @@ export class HeaderComponent {
   translate = inject(TranslateService);
   
   languages = [
-    { label: 'Português', code: 'pt' },
+    { label: 'Português', code: 'pt-BR' },
     { label: 'English', code: 'en' }
   ];
   

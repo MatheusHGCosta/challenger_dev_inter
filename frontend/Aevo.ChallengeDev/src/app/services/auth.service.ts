@@ -14,13 +14,15 @@ export class AuthService {
   // Verifica se estamos no navegador antes de acessar sessionStorage
   private storage = typeof window !== 'undefined' ? sessionStorage : null;
 
-  login(credentials: { email: string; password: string }): Observable<{ accessToken: string }> {
-    return this.http.post<{ accessToken: string }>(`${this.apiUrl}/login`, credentials).pipe(
+  login(credentials: { email: string; password: string }): Observable<{ accessToken: string, idioma:string }> {
+    return this.http.post<{ accessToken: string , idioma:string }>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         console.log(response)
         if (this.storage) {
           this.storage.setItem('token', response.accessToken);
         }
+
+        return response;
       })
     );
   }
