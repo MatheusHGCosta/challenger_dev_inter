@@ -1,4 +1,6 @@
-﻿using Aevo.CommonLib.Results;
+﻿using Aevo.ChallengeDev.WebApi.Core;
+using Aevo.ChallengeDev.WebApi.Modulos.Salas.Endpoints;
+using Aevo.CommonLib.Results;
 
 namespace Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Endpoints;
 
@@ -23,10 +25,22 @@ public record EditarAgendamento : EditarAgendamentoReqBody
     public required Guid AgendamentoId { get; init; }
 }
 
-public record EditarAgendamentoHandler() : ICaseHandler<EditarAgendamento, Unit>
+public class EditarAgendamentoHandler(Context context) : ICaseHandler<EditarAgendamento, Unit>
 {
-    public Task<Result<Unit>> Handle(EditarAgendamento req, CancellationToken ct)
+    public async Task<Result<Unit>> Handle(EditarAgendamento req, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var agendamento = await context.Agendamentos.FindAsync(req.AgendamentoId, ct);
+
+        if (agendamento == null)
+        {
+            return Result.NotFound();
+        }
+
+        agendamento.Fim = req.Fim;
+        agendamento.Inicio = req.Inicio;
+
+        await context.SaveChangesAsync(ct);
+
+        return Result.Ok();
     }
 }

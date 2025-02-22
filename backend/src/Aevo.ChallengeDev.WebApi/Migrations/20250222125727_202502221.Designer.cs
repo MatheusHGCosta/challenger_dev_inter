@@ -4,6 +4,7 @@ using Aevo.ChallengeDev.WebApi.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Aevo.ChallengeDev.WebApi.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250222125727_202502221")]
+    partial class _202502221
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Aevo.ChallengeDev.WebApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Aevo.ChallengeDev.WebApi.Modulos.Salas.Sala", b =>
+            modelBuilder.Entity("Aevo.ChallengeDev.WebApi.Modulos.Salas.Models.Sala", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,7 +53,7 @@ namespace Aevo.ChallengeDev.WebApi.Migrations
                     b.ToTable("Salas");
                 });
 
-            modelBuilder.Entity("Aevo.ChallengeDev.WebApi.Modulos.Usuarios.Usuario", b =>
+            modelBuilder.Entity("Aevo.ChallengeDev.WebApi.Modulos.Usuarios.Models.Usuario", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,38 +91,6 @@ namespace Aevo.ChallengeDev.WebApi.Migrations
 
                     b.ToTable("Usuarios");
                 });
-
-            modelBuilder.Entity("Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Agendamento", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uniqueidentifier");
-
-                b.Property<Guid>("SalaId")
-                    .IsRequired()
-                    .HasColumnType("uniqueidentifier");
-
-                b.Property<Guid>("UsuarioId")
-                    .IsRequired()
-                    .HasColumnType("uniqueidentifier");
-
-                b.Property<DateTime>("Inicio")
-                    .IsRequired()
-                    .HasColumnType("datetime2");
-
-                b.Property<DateTime>("Fim")
-                    .IsRequired()
-                    .HasColumnType("datetime2");
-
-                b.HasKey("Id");
-
-                b.HasIndex("SalaId");
-
-                b.HasIndex("UsuarioId");
-
-                b.ToTable("Agendamentos");
-            });
-
 #pragma warning restore 612, 618
         }
     }

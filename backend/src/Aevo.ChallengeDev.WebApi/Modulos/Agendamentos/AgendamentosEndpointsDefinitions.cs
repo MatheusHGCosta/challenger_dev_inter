@@ -1,15 +1,16 @@
 ﻿using Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Endpoints;
 using Aevo.CommonLib.Results.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aevo.ChallengeDev.WebApi.Modulos.Agendamentos;
-
 public static class AgendamentosEndpointsDefinitions
 {
     private static async Task<IResult> CriarAgendamentoEndpoint([FromServices] CriarAgendamentoHandler handler,
-        [FromRoute] Guid salaId, [FromBody] CriarAgendamentoReqBody body, CancellationToken ct = default)
+        [FromRoute] Guid salaId, [FromBody] CriarAgendamentoReqBody body, HttpContext httpContext, CancellationToken ct = default)
     {
-        return (await handler.Handle(body.ToCriarAgendamento(salaId), ct)).ToApiResult();
+        return (await handler.Handle(body.ToCriarAgendamento(salaId, Guid.Parse(httpContext.User.FindFirst("sub")!.Value)), ct)).ToApiResult();
     }
 
     private static async Task<IResult> EditarAgendamentoEndpoint([FromServices] EditarAgendamentoHandler handler,
@@ -31,9 +32,9 @@ public static class AgendamentosEndpointsDefinitions
     }
 
     private static async Task<IResult> GetAgendamentosUsuarioLogadoEndpoint(
-        [FromServices] GetAgendamentosUsuarioLogadoHandler handler, CancellationToken ct = default)
+        [FromServices] GetAgendamentosUsuarioLogadoHandler handler, HttpContext httpContext, CancellationToken ct = default)
     {
-        return (await handler.Handle(GetAgendamentosUsuarioLogado.Instance, ct)).ToApiResult();
+        return (await handler.Handle(new GetAgendamentosUsuarioLogado(Guid.Parse(httpContext.User.FindFirst("sub")!.Value)), ct)).ToApiResult();
     }
 
 

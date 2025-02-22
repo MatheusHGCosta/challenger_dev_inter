@@ -1,4 +1,6 @@
-﻿using Aevo.CommonLib.Results;
+﻿using Aevo.ChallengeDev.WebApi.Core;
+using Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Models;
+using Aevo.CommonLib.Results;
 
 namespace Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Endpoints;
 
@@ -7,13 +9,14 @@ public record CriarAgendamentoReqBody
     public required DateTime Inicio { get; init; }
     public required DateTime Fim { get; init; }
 
-    public CriarAgendamento ToCriarAgendamento(Guid salaId)
+    public CriarAgendamento ToCriarAgendamento(Guid salaId,Guid UsuarioId)
     {
         return new CriarAgendamento()
         {
             Inicio = Inicio,
             Fim = Fim,
-            SalaId = salaId
+            SalaId = salaId,
+            UsuarioId = UsuarioId
         };
     }
 }
@@ -21,6 +24,7 @@ public record CriarAgendamentoReqBody
 public record CriarAgendamento : CriarAgendamentoReqBody
 {
     public required Guid SalaId { get; init; }
+    public required Guid UsuarioId{ get; init; }
 }
 
 public record CriarAgendamentoResponse
@@ -28,10 +32,26 @@ public record CriarAgendamentoResponse
     public required Guid AgendamentoId { get; init; }
 }
 
-public record CriarAgendamentoHandler : ICaseHandler<CriarAgendamento, CriarAgendamentoResponse>
+public class CriarAgendamentoHandler(Context context) : ICaseHandler<CriarAgendamento, CriarAgendamentoResponse>
 {
-    public Task<Result<CriarAgendamentoResponse>> Handle(CriarAgendamento req, CancellationToken ct)
+    public async Task<Result<CriarAgendamentoResponse>> Handle(CriarAgendamento req, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var agendamento = new Agendamento()
+        {
+            Id = Guid.NewGuid(),
+            UsuarioId = req.UsuarioId,
+            Inicio = req.Inicio,
+            Fim = req.Inicio,
+            SalaId = req.SalaId,
+        };
+
+        context.Agendamentos.Add(agendamento);
+
+        await context.SaveChangesAsync(ct);
+
+        return new CriarAgendamentoResponse()
+        {
+            AgendamentoId = agendamento.Id,
+        };
     }
 }
