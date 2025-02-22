@@ -1,5 +1,6 @@
 ﻿using Aevo.ChallengeDev.WebApi.Core;
 using Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Models;
+using Aevo.ChallengeDev.WebApi.Services;
 using Aevo.CommonLib.Results;
 
 namespace Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Endpoints;
@@ -36,12 +37,15 @@ public class CriarAgendamentoHandler(Context context) : ICaseHandler<CriarAgenda
 {
     public async Task<Result<CriarAgendamentoResponse>> Handle(CriarAgendamento req, CancellationToken ct)
     {
+        var usuario = await context.Usuarios.FindAsync(req.UsuarioId, ct);
+        var sala = await context.Salas.FindAsync(req.SalaId, ct);
+
         var agendamento = new Agendamento()
         {
             Id = Guid.NewGuid(),
             UsuarioId = req.UsuarioId,
-            Inicio = req.Inicio,
-            Fim = req.Inicio,
+            Inicio = FusoHorarioService.ConverterFuso(req.Inicio, usuario.FusoHorario, sala.FusoHorario),
+            Fim = FusoHorarioService.ConverterFuso(req.Fim, usuario.FusoHorario, sala.FusoHorario),
             SalaId = req.SalaId,
         };
 

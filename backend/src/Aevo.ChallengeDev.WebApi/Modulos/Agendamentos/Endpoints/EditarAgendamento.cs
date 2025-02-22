@@ -1,5 +1,6 @@
 ﻿using Aevo.ChallengeDev.WebApi.Core;
 using Aevo.ChallengeDev.WebApi.Modulos.Salas.Endpoints;
+using Aevo.ChallengeDev.WebApi.Services;
 using Aevo.CommonLib.Results;
 
 namespace Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Endpoints;
@@ -36,8 +37,16 @@ public class EditarAgendamentoHandler(Context context) : ICaseHandler<EditarAgen
             return Result.NotFound();
         }
 
-        agendamento.Fim = req.Fim;
-        agendamento.Inicio = req.Inicio;
+        var usuario = await context.Usuarios.FindAsync(agendamento.UsuarioId, ct);
+        var sala = await context.Salas.FindAsync(agendamento.SalaId, ct);
+
+        if (usuario == null || sala == null)
+        {
+            return Result.Error("Usuário ou sala não encontrados.");
+        }
+
+        agendamento.Inicio = FusoHorarioService.ConverterFuso(req.Inicio, usuario.FusoHorario, sala.FusoHorario);
+        agendamento.Fim = FusoHorarioService.ConverterFuso(req.Fim, usuario.FusoHorario, sala.FusoHorario);
 
         await context.SaveChangesAsync(ct);
 

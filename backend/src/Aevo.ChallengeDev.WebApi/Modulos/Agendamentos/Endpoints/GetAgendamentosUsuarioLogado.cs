@@ -1,4 +1,6 @@
 ﻿using Aevo.ChallengeDev.WebApi.Core;
+using Aevo.ChallengeDev.WebApi.Modulos.Usuarios.Models;
+using Aevo.ChallengeDev.WebApi.Services;
 using Aevo.CommonLib.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +28,8 @@ public class GetAgendamentosUsuarioLogadoHandler(Context context) : ICaseHandler
                             SalaNome = sala.Nome,
                             UsuarioId = temp.usuario.Id,
                             UsuarioNome = temp.usuario.Nome,
-                            Inicio = temp.agendamento.Inicio,
-                            Fim = temp.agendamento.Fim
+                            Inicio = FusoHorarioService.ConverterFuso(temp.agendamento.Inicio, sala.FusoHorario, temp.usuario.FusoHorario),
+                            Fim = FusoHorarioService.ConverterFuso(temp.agendamento.Fim, sala.FusoHorario, temp.usuario.FusoHorario)
                         })
                     .ToArrayAsync(cancellationToken: ct);
 

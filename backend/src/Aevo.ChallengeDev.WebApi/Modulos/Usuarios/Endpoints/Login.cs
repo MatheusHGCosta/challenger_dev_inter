@@ -14,6 +14,7 @@ public class Login
 public record LoginResponse
 {
     public required string AccessToken { get; init; }
+    public required string Idioma { get; init; }
 }
 
 public class LoginHandler(Context context, IAuthService authService) : ICaseHandler<Login, LoginResponse>
@@ -25,7 +26,8 @@ public class LoginHandler(Context context, IAuthService authService) : ICaseHand
             .Select(u => new
             {
                 u.Id,
-                u.PasswordHash
+                u.PasswordHash,
+                u.Idioma
             })
             .FirstOrDefaultAsync(cancellationToken: ct);
 
@@ -45,7 +47,8 @@ public class LoginHandler(Context context, IAuthService authService) : ICaseHand
 
         return new LoginResponse
         {
-            AccessToken = token
+            AccessToken = token,
+            Idioma = user.Idioma
         };
     }
 }

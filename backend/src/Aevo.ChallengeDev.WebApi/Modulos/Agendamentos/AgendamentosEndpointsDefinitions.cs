@@ -3,6 +3,7 @@ using Aevo.CommonLib.Results.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 
 namespace Aevo.ChallengeDev.WebApi.Modulos.Agendamentos;
 public static class AgendamentosEndpointsDefinitions
@@ -26,9 +27,9 @@ public static class AgendamentosEndpointsDefinitions
     }
 
     private static async Task<IResult> GetAgendamentosSalaEndpoint([FromServices] GetAgendamentosSalaHandler handler,
-        [FromRoute] Guid salaId, CancellationToken ct = default)
+        [FromRoute] Guid salaId, HttpContext httpContext, CancellationToken ct = default)
     {
-        return (await handler.Handle(new GetAgendamentosSala(salaId), ct)).ToApiResult();
+        return (await handler.Handle(new GetAgendamentosSala(salaId, Guid.Parse(httpContext.User.FindFirst("sub")!.Value)), ct)).ToApiResult();
     }
 
     private static async Task<IResult> GetAgendamentosUsuarioLogadoEndpoint(

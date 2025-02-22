@@ -1,11 +1,12 @@
 ﻿using Aevo.ChallengeDev.WebApi.Core;
 using Aevo.ChallengeDev.WebApi.Modulos.Salas.Models;
+using Aevo.ChallengeDev.WebApi.Services;
 using Aevo.CommonLib.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Endpoints;
 
-public record GetAgendamentosSala(Guid SalaId);
+public record GetAgendamentosSala(Guid SalaId, Guid UsuarioId);
 
 public class AgendamentoView
 {
@@ -22,6 +23,8 @@ public class GetAgendamentosSalaHandler(Context context) : ICaseHandler<GetAgend
 {
     public async Task<Result<AgendamentoView[]>> Handle(GetAgendamentosSala req, CancellationToken ct)
     {
+        var usuario = await context.Usuarios.FindAsync(req.UsuarioId, ct);
+
         return await context.Agendamentos
                     .Join(context.Salas,
                         agendamento => agendamento.SalaId,
@@ -38,8 +41,8 @@ public class GetAgendamentosSalaHandler(Context context) : ICaseHandler<GetAgend
                         SalaNome = temp.sala.Nome,
                         UsuarioId = usuario.Id,
                         UsuarioNome = usuario.Nome,
-                        Inicio = temp.agendamento.Inicio,
-                        Fim = temp.agendamento.Fim
+                        Inicio = FusoHorarioService.ConverterFuso(temp.agendamento.Inicio,temp.sala.FusoHorario,usuario.FusoHorario),
+                        Fim = FusoHorarioService.ConverterFuso(temp.agendamento.Fim, temp.sala.FusoHorario,usuario.FusoHorario)
                     })
                     .ToArrayAsync(cancellationToken: ct);
     }
