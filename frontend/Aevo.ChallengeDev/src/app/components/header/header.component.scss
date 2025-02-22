@@ -1,0 +1,19 @@
+.header {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #007ad9;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .language-selector p-dropdown {
+    width: 150px;
+  }
+  

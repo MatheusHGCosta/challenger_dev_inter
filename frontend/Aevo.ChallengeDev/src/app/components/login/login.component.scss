@@ -1,0 +1,16 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  p-card {
+    width: 350px;
+    padding: 20px;
+  }
+  .p-field {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
