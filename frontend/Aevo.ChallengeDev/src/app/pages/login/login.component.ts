@@ -41,7 +41,7 @@ export class LoginComponent {
         next: (suc) => {
           this.translate.setDefaultLang(suc.idioma);
           this.translate.use(suc.idioma);
-          this.router.navigate(['/agendamentos'])
+          this.router.navigate(['/menu'])
         },
         error: () =>  {
           this.alertCtrl.showError('ALERTAS.ERRO_LOGIN');

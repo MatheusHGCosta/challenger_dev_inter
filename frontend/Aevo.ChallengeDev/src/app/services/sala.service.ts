@@ -13,4 +13,7 @@ export class SalaService {
   getSalas(): Observable<Sala[]> {
     return this.http.get<Sala[]>(this.apiUrl);
   }  
+  deleteSala(id:string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }  
 }
