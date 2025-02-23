@@ -7,5 +7,6 @@
         public required Guid UsuarioId { get; init; }
         public required DateTime Inicio { get; set; }
         public required DateTime Fim { get; set; }
+        public required string Descricao { get; set; }
     }
 }

@@ -47,6 +47,7 @@ public class CriarAgendamentoHandler(Context context) : ICaseHandler<CriarAgenda
             Inicio = FusoHorarioService.ConverterFuso(req.Inicio, usuario.FusoHorario, sala.FusoHorario),
             Fim = FusoHorarioService.ConverterFuso(req.Fim, usuario.FusoHorario, sala.FusoHorario),
             SalaId = req.SalaId,
+            Descricao =""
         };
 
         context.Agendamentos.Add(agendamento);

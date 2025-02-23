@@ -1,36 +1,39 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AgendamentoReqBody, Sala } from '../components/agendamento-form/agendamento-form.component';
+
 
 export interface Agendamento {
-  id: number;
-  usuario: string;
-  sala: string;
-  data: string;
+  id: string;
+  salaId: string;
+  salaNome: string;
+  usuarioId: string;
+  usuarioNome: string;
+  inicio: Date;
+  fim: Date;
 }
-
 @Injectable({ providedIn: 'root' })
 export class AgendamentoService {
-  private agendamentos = new BehaviorSubject<Agendamento[]>([
-    { id: 1, usuario: 'João', sala: 'Sala A', data: '2024-02-21' },
-    { id: 2, usuario: 'Maria', sala: 'Sala B', data: '2024-02-22' }
-  ]);
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:5185/agendamentos';
 
-  getAgendamentos() {
-    return this.agendamentos.asObservable();
+  getAgendamentos(): Observable<Agendamento[]> {
+    console.log('[AgendamentoService] Chamando API:', this.apiUrl);
+    return this.http.get<Agendamento[]>(this.apiUrl);
   }
 
-  addAgendamento(agendamento: Agendamento) {
-    const lista = [...this.agendamentos.value, agendamento];
-    this.agendamentos.next(lista);
+   addAgendamento(agendamentoBody: AgendamentoReqBody, sala : Sala): Observable<{AgendamentoId : string}> {
+    console.log('[AgendamentoService] Chamando API: ', this.apiUrl);
+    return this.http.post<{AgendamentoId : string}>(`${this.apiUrl}/salas/${sala.id}`,agendamentoBody);
   }
 
-  editAgendamento(id: number, novoAgendamento: Agendamento) {
-    const lista = this.agendamentos.value.map(a => a.id === id ? novoAgendamento : a);
-    this.agendamentos.next(lista);
+  editAgendamento(agendamentoBody: AgendamentoReqBody, agendamentoId: string): Observable<{AgendamentoId : string}> {
+    console.log('[AgendamentoService] Chamando API: editAgendamento', this.apiUrl);
+    return this.http.put<{AgendamentoId : string}>(`${this.apiUrl}/${agendamentoId}`,agendamentoBody);
   }
 
-  deleteAgendamento(id: number) {
-    const lista = this.agendamentos.value.filter(a => a.id !== id);
-    this.agendamentos.next(lista);
+    deleteAgendamento(agendamentoId: string): Observable<void> {
+      return this.http.delete<void>(`${this.apiUrl}/${agendamentoId}`);
   }
 }

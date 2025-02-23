@@ -9,14 +9,28 @@
         {
             try
             {
-                TimeZoneInfo tzUsuario = TZConvert.GetTimeZoneInfo(fusoDe);
-                TimeZoneInfo tzSala = TZConvert.GetTimeZoneInfo(fusoPara);
+                TimeZoneInfo tzDe = TZConvert.GetTimeZoneInfo(fusoDe);
+                TimeZoneInfo tzPara = TZConvert.GetTimeZoneInfo(fusoPara);
 
-                DateTime horarioUtc = TimeZoneInfo.ConvertTimeToUtc(dataBase, tzUsuario);
 
-                DateTime horarioSala = TimeZoneInfo.ConvertTimeFromUtc(horarioUtc, tzSala);
+                DateTime horarioUtc;
+                switch (dataBase.Kind)
+                {
+                    case DateTimeKind.Utc:
+                        horarioUtc = dataBase;
+                        break;
+                    case DateTimeKind.Local:
+                        dataBase = DateTime.SpecifyKind(dataBase, DateTimeKind.Unspecified);
+                        horarioUtc = TimeZoneInfo.ConvertTimeToUtc(dataBase, tzDe);
+                        break;
+                    default:
+                        horarioUtc = TimeZoneInfo.ConvertTimeToUtc(dataBase, tzDe);
+                        break;
+                }
 
-                return horarioSala;
+                DateTime horarioFinal = TimeZoneInfo.ConvertTimeFromUtc(horarioUtc, tzPara);
+
+                return horarioFinal;
             }
             catch (TimeZoneNotFoundException)
             {
