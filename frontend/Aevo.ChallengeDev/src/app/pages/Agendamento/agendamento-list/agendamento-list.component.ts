@@ -31,11 +31,11 @@ export class AgendamentoListComponent implements OnInit {
   delete(id: string) {
     this.agendamentoService.deleteAgendamento(id).subscribe({
       next: () => {
-        this.alertCtrl.showSuccess(this.translatePipe.transform('ALERTAS.AGENDAMENTO_EXCLUIDO'));
+        this.alertCtrl.showSuccess('ALERTAS.AGENDAMENTO_EXCLUIDO');
         this.agendamentos$ = this.agendamentoService.getAgendamentos();
      },
      error: () =>{
-      this.alertCtrl.showError(this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_EXCLUIR'));
+      this.alertCtrl.showError('ALERTAS.AGENDAMENTO_ERRO_EXCLUIR');
     }
    });
   }

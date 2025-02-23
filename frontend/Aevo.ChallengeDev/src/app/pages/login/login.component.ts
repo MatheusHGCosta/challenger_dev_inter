@@ -44,7 +44,7 @@ export class LoginComponent {
           this.router.navigate(['/agendamentos'])
         },
         error: () =>  {
-          this.alertCtrl.showError(this.translatePipe.transform('ALERTAS.ERRO_LOGIN'));
+          this.alertCtrl.showError('ALERTAS.ERRO_LOGIN');
         }
       });
     }
