@@ -1,9 +1,10 @@
 ﻿namespace Aevo.ChallengeDev.WebApi.Services
 {
+    using Aevo.ChallengeDev.WebApi.Core;
     using System;
     using TimeZoneConverter;
 
-    public class FusoHorarioService
+    public class FusoHorarioService()
     {
         public static DateTime ConverterFuso(DateTime dataBase, string fusoDe, string fusoPara)
         {
@@ -42,5 +43,4 @@
             }
         }
     }
-
 }

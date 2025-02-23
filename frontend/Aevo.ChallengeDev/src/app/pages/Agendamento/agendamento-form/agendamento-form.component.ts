@@ -112,7 +112,7 @@ export class AgendamentoFormComponent {
           this.router.navigate(['/agendamentos']);
         },
         error: (err) => {
-          this.alertCtrl.showError('ALERTAS.AGENDAMENTO_ERRO_EDITAR');
+          this.alertCtrl.showError(err?.error?.[0]?.errorMessage || 'ALERTAS.AGENDAMENTO_ERRO_EDITAR');
         }
       });
     } else {
@@ -127,8 +127,8 @@ export class AgendamentoFormComponent {
           this.alertCtrl.showSuccess('ALERTAS.AGENDAMENTO_CRIADO');
           this.router.navigate(['/agendamentos']);
        },
-       error: () => {
-         this.alertCtrl.showError('ALERTAS.AGENDAMENTO_ERRO_CRIAR');
+       error: (err) => {
+        this.alertCtrl.showError(err?.error?.[0]?.errorMessage || 'ALERTAS.AGENDAMENTO_ERRO_CRIAR');
        }
      });
     };

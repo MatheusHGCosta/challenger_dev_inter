@@ -2,6 +2,7 @@
 using Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Models;
 using Aevo.ChallengeDev.WebApi.Services;
 using Aevo.CommonLib.Results;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Endpoints;
 
@@ -35,10 +36,24 @@ public record CriarAgendamentoResponse
 
 public class CriarAgendamentoHandler(Context context) : ICaseHandler<CriarAgendamento, CriarAgendamentoResponse>
 {
+
+
+    public async Task<bool> VerificaConflito(Guid salaId, DateTime inicio, DateTime fim)
+    {
+        return await context.Agendamentos
+            .AnyAsync(a =>
+                a.SalaId == salaId &&
+                ((inicio >= a.Inicio && inicio < a.Fim) ||
+                 (fim > a.Inicio && fim <= a.Fim) ||
+                 (inicio <= a.Inicio && fim >= a.Fim)));
+    }
+
     public async Task<Result<CriarAgendamentoResponse>> Handle(CriarAgendamento req, CancellationToken ct)
     {
         var usuario = await context.Usuarios.FindAsync(req.UsuarioId, ct);
         var sala = await context.Salas.FindAsync(req.SalaId, ct);
+            
+        
 
         var agendamento = new Agendamento()
         {
@@ -49,6 +64,16 @@ public class CriarAgendamentoHandler(Context context) : ICaseHandler<CriarAgenda
             SalaId = req.SalaId,
             Descricao =""
         };
+
+        if (await VerificaConflito(agendamento.SalaId, agendamento.Inicio, agendamento.Fim))
+        {
+
+            return Result.Invalid(new AppError()
+            {
+                ErrorCode = "501",
+                ErrorMessage = "ALERTAS.AGENDAMENTO_EXISTENTE"
+            });
+        }
 
         context.Agendamentos.Add(agendamento);
 
