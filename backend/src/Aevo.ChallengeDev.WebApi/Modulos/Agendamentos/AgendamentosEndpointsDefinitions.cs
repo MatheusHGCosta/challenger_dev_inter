@@ -15,15 +15,15 @@ public static class AgendamentosEndpointsDefinitions
     }
 
     private static async Task<IResult> EditarAgendamentoEndpoint([FromServices] EditarAgendamentoHandler handler,
-        [FromRoute] Guid agendamentoId, [FromBody] EditarAgendamentoReqBody body, CancellationToken ct = default)
+        [FromRoute] Guid agendamentoId, [FromBody] EditarAgendamentoReqBody body, HttpContext httpContext, CancellationToken ct = default)
     {
-        return (await handler.Handle(body.ToEditarAgendamento(agendamentoId), ct)).ToApiResult();
+        return (await handler.Handle(body.ToEditarAgendamento(agendamentoId, Guid.Parse(httpContext.User.FindFirst("sub")!.Value)), ct)).ToApiResult();
     }
 
     private static async Task<IResult> ExcluirAgendamentoEndpoint([FromServices] ExcluiAgendamentoHandler handler,
-        [FromRoute] Guid agendamentoId, CancellationToken ct = default)
+        [FromRoute] Guid agendamentoId, HttpContext httpContext, CancellationToken ct = default)
     {
-        return (await handler.Handle(new ExcluirAgendamento(agendamentoId), ct)).ToApiResult();
+        return (await handler.Handle(new ExcluirAgendamento(agendamentoId, Guid.Parse(httpContext.User.FindFirst("sub")!.Value)), ct)).ToApiResult();
     }
 
     private static async Task<IResult> GetAgendamentosSalaEndpoint([FromServices] GetAgendamentosSalaHandler handler,

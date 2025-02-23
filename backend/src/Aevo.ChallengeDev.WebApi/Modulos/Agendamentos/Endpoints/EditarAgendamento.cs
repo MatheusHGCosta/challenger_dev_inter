@@ -11,13 +11,14 @@ public record EditarAgendamentoReqBody
     public required DateTime Inicio { get; init; }
     public required DateTime Fim { get; init; }
 
-    public EditarAgendamento ToEditarAgendamento(Guid agendamentoId)
+    public EditarAgendamento ToEditarAgendamento(Guid agendamentoId, Guid usuarioId)
     {
         return new EditarAgendamento
         {
             Inicio = Inicio,
             Fim = Fim,
-            AgendamentoId = agendamentoId
+            AgendamentoId = agendamentoId,
+            usuarioId = usuarioId,
         };
     }
 }
@@ -25,6 +26,7 @@ public record EditarAgendamentoReqBody
 public record EditarAgendamento : EditarAgendamentoReqBody
 {
     public required Guid AgendamentoId { get; init; }
+    public required Guid usuarioId { get; init; }
 }
 
 public class EditarAgendamentoHandler(Context context) : ICaseHandler<EditarAgendamento, Unit>
@@ -48,6 +50,11 @@ public class EditarAgendamentoHandler(Context context) : ICaseHandler<EditarAgen
         if (agendamento == null)
         {
             return Result.NotFound();
+        }
+
+        if (agendamento.UsuarioId != req.usuarioId)
+        {
+            return Result.Forbidden();
         }
 
         var usuario = await context.Usuarios.FindAsync(agendamento.UsuarioId, ct);
