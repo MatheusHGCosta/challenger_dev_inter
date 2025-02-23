@@ -11,5 +11,4 @@ import { RouterModule } from '@angular/router';
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
-
 }
