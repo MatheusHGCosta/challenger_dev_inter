@@ -1,3 +1,8 @@
+<div>
+  <button pButton label="{{'NOVO' | translate}}" class="p-button-info" [routerLink]="['/agendamentos/novo']"></button>
+</div>
+
+
 <p-table [value]="(agendamentos$ | async) ?? []" responsiveLayout="scroll">
   <ng-template pTemplate="header">
     <tr>

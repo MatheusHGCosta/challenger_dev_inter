@@ -9,6 +9,25 @@
       </div>
     </ng-container>
 
+
+    <ng-container *ngIf="salas.length>0">
+      <label for="salaDropdown">Selecione uma Sala:</label>
+      <select id="salaDropdown" (change)="selecionarSala($event)">
+        <option value="" disabled selected>Escolha uma sala</option>
+        <option *ngFor="let sala of salas" [value]="sala.id">
+          {{ sala.nome }}
+        </option>
+      </select>
+      
+      <div *ngIf="sala">
+        <h3>{{"DETALHE_SALA_SELECIONADA" | translate}}:</h3>
+        <p>Nome: {{ sala.nome }}</p>
+        <p>Descrição: {{ sala.descricao }}</p>
+        <p>Capacidade: {{ sala.capacidade }}</p>
+        <p>Fuso Horário: {{ sala.fusoHorario }}</p>
+      </div>
+
+    </ng-container>
     <button pButton label='{{"SALVAR" | translate}}'(click)="salvar()"></button>
     <button pButton label='{{"CANCELAR" | translate}}' class="p-button-secondary" routerLink="/agendamentos"></button>
   </div>

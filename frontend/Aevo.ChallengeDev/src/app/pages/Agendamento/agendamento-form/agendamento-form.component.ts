@@ -35,15 +35,7 @@ export class AgendamentoFormComponent {
   id : string | null = '';
   agendamento : Agendamento | null = null;
 
-  sala: Sala = {
-    id:'6CF59D00-2B17-41C7-9C77-030F7D412868',
-    nome: 'Sala de Conferência Berlim',
-    descricao:'Sala para conferências internacionais em Berlim',
-    capacidade: 29,
-    fusoHorario: 'Europe/Berlin'
-  }
-
-
+  sala: Sala | null = null;
   salas:Sala[] =[]
   isEditMode = false;
 
@@ -72,16 +64,36 @@ export class AgendamentoFormComponent {
             }
           }
         })
+      }else{
+        this.getSalas();
+        this.agendamento={
+          id: '',
+          salaId: '',
+          salaNome: '',
+          usuarioId: '',
+          usuarioNome: '',
+          inicio: new Date(),
+          fim: new Date()
+        }
       }
     });
+    
+  }
+
+  getSalas(){
     this.salaService.getSalas().subscribe({
       next: (suc) => {
         this.salas=suc
      },
-     error: (err) => {
+     error: () => {
        this.alertCtrl.showError('ALERTAS.AGENDAMENTO_ERRO_CARREGAR_SALA');
      }
    });
+  }
+
+  selecionarSala(event: any) {
+    const salaId = event.target.value;
+    this.sala = this.salas.find(sala => sala.id === salaId) || null;
   }
 
   salvar() {
@@ -104,6 +116,12 @@ export class AgendamentoFormComponent {
         }
       });
     } else {
+
+      if(!this.sala){
+        this.alertCtrl.showError('ALERTAS.SELECIONAR_SALA');
+        return;
+      }
+
       this.agendamentoService.addAgendamento(agendamentoReq,this.sala).subscribe({
         next: () => {
           this.alertCtrl.showSuccess('ALERTAS.AGENDAMENTO_CRIADO');
