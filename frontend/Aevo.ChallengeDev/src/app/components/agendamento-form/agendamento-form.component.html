@@ -1,22 +1,15 @@
 <div class="form-container">
-    <h2>{{ isEditMode ? 'Editar Agendamento' : 'Novo Agendamento' }}</h2>
-  
-    <div class="form-field">
-      <label for="usuario">Usuário:</label>
-      <input id="usuario" type="text" pInputText [(ngModel)]="agendamento.usuario">
-    </div>
-  
-    <div class="form-field">
-      <label for="sala">Sala:</label>
-      <input id="sala" type="text" pInputText [(ngModel)]="agendamento.sala">
-    </div>
-  
-    <div class="form-field">
-      <label for="data">Data:</label>
-      <input id="data" type="date" pInputText [(ngModel)]="agendamento.data">
-    </div>
-  
-    <button pButton label="Salvar" (click)="salvar()"></button>
-    <button pButton label="Cancelar" class="p-button-secondary" routerLink="/"></button>
+    <h2>{{ (isEditMode ? 'EDITAR_AGENDAMENTO' : 'NOVO_AGENDAMENTO') | translate  }}</h2>
+
+    <ng-container  *ngIf="agendamento">
+      <p-datepicker inputId="dtInicio" [(ngModel)]="agendamento.inicio" [showTime]="true" hourFormat="24"/>
+      <p-datepicker inputId="dtFim" [(ngModel)]="agendamento.fim" [showTime]="true" hourFormat="24" />
+      <div>
+        <p>{{agendamento.salaNome}}</p>
+      </div>
+    </ng-container>
+
+    <button pButton label='{{"SALVAR" | translate}}'(click)="salvar()"></button>
+    <button pButton label='{{"CANCELAR" | translate}}' class="p-button-secondary" routerLink="/"></button>
   </div>
   

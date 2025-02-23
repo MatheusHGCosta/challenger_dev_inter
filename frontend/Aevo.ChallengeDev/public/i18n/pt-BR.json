@@ -1,7 +1,19 @@
 {
-    "HOME": {
-      "TITLE": "Olá mundo com ngx-translate",
-      "SELECT": "Selecione o idioma"
-    }
-  }
+  "USUARIO" : "Usuário",
+  "SALA" : "Sala",
+  "INICIO" : "Início",
+  "FIM" : "Fim",
+  "ACOES" : "Ações",
+  "IDIOMA" : "Idioma",
+  "EDITAR" : "Editar",
+  "EXCLUIR" : "Excluir",
+  "EDITAR_AGENDAMENTO" : "Editar Agendamento",
+  "NOVO_AGENDAMENTO" : "Novo Agendamento",
+  "SALVAR": "Salvar",
+  "CANCELAR":"Cancelar",
+  "EMAIL" : "Email",
+  "SENHA" : "Senha",
+  "ENTRAR" : "Entrar",
+  "LOGIN" : "Login"
+}
   

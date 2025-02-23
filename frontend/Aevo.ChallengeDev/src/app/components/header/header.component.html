@@ -1,12 +1,12 @@
 <header class="header">
-  <div class="logo">{{ 'HOME.TITLE' | translate }}</div>
+  <div class="logo">{{ 'IDIOMA' | translate }}</div>
   <div class="language-selector">
     <p-dropdown 
       [options]="languages" 
       [(ngModel)]="selectedLanguage" 
       (onChange)="changeLanguage($event.value)" 
       optionLabel="label"
-      placeholder="{{ 'HOME.SELECT' | translate }}">
+      placeholder="{{ 'IDIOMA' | translate }}">
     </p-dropdown>
   </div>
 </header>

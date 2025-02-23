@@ -2,12 +2,12 @@
     <p-card header="Login">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="p-field">
-          <label for="email">Email</label>
+          <label for="email">{{'Email' | translate}}</label>
           <input pInputText id="email" type="email" formControlName="email" placeholder="Digite seu e-mail">
         </div>
 
         <div class="p-field">
-          <label for="password">Senha</label>
+          <label for="password">{{'Senha' | translate}}</label>
           <input pPassword id="password" toggleMask formControlName="password" placeholder="Digite sua senha">
         </div>
 

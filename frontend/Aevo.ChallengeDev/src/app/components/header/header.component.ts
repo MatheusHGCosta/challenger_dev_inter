@@ -15,7 +15,11 @@ export class HeaderComponent {
   
   languages = [
     { label: 'Português', code: 'pt-BR' },
-    { label: 'English', code: 'en' }
+    { label: 'English', code: 'en-US' },
+    { label: 'Deutsch', code: 'de-DE' },
+    { label: 'español', code: 'es' },
+    { label: 'Français', code: 'fr-FR' },
+    { label: '日本語', code: 'ja-JP' },
   ];
   
   selectedLanguage = this.languages[0].code;
