@@ -8,7 +8,7 @@ import { HttpClient, provideHttpClient,withInterceptorsFromDi,HTTP_INTERCEPTORS}
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import { AuthInterceptor } from './interceptor/auth.interceptor'
+import { AuthInterceptor } from './interceptors/auth.interceptor'
 import Aura from '@primeng/themes/aura';
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
