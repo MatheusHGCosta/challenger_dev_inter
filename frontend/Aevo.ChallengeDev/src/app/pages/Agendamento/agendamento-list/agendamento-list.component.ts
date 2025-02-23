@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AgendamentoService, Agendamento } from '../../../services/agendamento.service';
 import { Observable } from 'rxjs';
@@ -17,16 +17,22 @@ import { AlertService } from '../../../services/alert.service';
 })
 export class AgendamentoListComponent implements OnInit {
   agendamentos$!: Observable<Agendamento[]>;
-  ngOnInit(): void {
-    this.agendamentos$ = this.agendamentoService.getAgendamentos();
-  }
+  ngOnInit(): void {}
 
+  idSala : string | null = null;
   constructor(
-    private translatePipe : TranslatePipe,
+    private route : ActivatedRoute,
     private agendamentoService : AgendamentoService,
     private alertCtrl : AlertService
   ){
-
+    this.route.paramMap.subscribe(params => {
+      this.idSala = params.get('id');
+      if (this.idSala) {
+        this.agendamentos$ = this.agendamentoService.getAgendamentosSala(this.idSala);
+      }else{
+        this.agendamentos$ = this.agendamentoService.getAgendamentos();
+      }
+    });
   }
   delete(id: string) {
     this.agendamentoService.deleteAgendamento(id).subscribe({

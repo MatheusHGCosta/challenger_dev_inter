@@ -1,5 +1,5 @@
 <div>
-  <button pButton label="{{'NOVO' | translate}}" class="p-button-info" [routerLink]="['/agendamentos/novo']"></button>
+  <button pButton label="{{'NOVO' | translate}}" class="p-button-info" [routerLink]="['/agendamentos/novo'] "></button>
 </div>
 
 
@@ -10,7 +10,7 @@
       <th>{{"SALA" | translate}}</th>
       <th>{{"INICIO" | translate}}</th>
       <th>{{"FIM" | translate}}</th>
-      <th>{{"ACOES" | translate}}</th>
+      <th *ngIf="!idSala">{{"ACOES" | translate}}</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-agendamento>
@@ -19,7 +19,7 @@
       <td>{{ agendamento.salaNome }}</td>
       <td>{{ agendamento.inicio | date:'dd/MM/yyyy HH:mm' }}</td>
       <td>{{ agendamento.fim | date:'dd/MM/yyyy HH:mm' }}</td>
-      <td>
+      <td *ngIf="!idSala">
         <button pButton label="{{'Editar' | translate}}" [routerLink]="['/agendamentos/editar', agendamento.id]"></button>
         <button pButton label="{{'Excluir' | translate}}" class="p-button-danger" (click)="delete(agendamento.id)"></button>
       </td>

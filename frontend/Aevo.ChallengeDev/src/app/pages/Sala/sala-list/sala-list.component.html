@@ -9,6 +9,7 @@
         <th>{{"NOME" | translate}}</th>
         <th>{{"CAPACIDADE" | translate}}</th>
         <th>{{"FUSOHORARIO" | translate}}</th>
+        <th>{{"ACOES" | translate}}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-sala>
@@ -19,6 +20,7 @@
         <td>
           <button pButton label="{{'Editar' | translate}}" [routerLink]="['/salas/editar', sala.id]"></button>
           <button pButton label="{{'Excluir' | translate}}" class="p-button-danger" (click)="delete(sala.id)"></button>
+          <button pButton label="{{'Ver agendamentos' | translate}}" class="p-button-info" [routerLink]="['/agendamentos/sala', sala.id]"></button>
         </td>
       </tr>
     </ng-template>

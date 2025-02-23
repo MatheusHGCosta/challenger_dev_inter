@@ -23,6 +23,11 @@ export class AgendamentoService {
     return this.http.get<Agendamento[]>(this.apiUrl);
   }
 
+  getAgendamentosSala(salaId:string): Observable<Agendamento[]> {
+    console.log('[AgendamentoService] Chamando API:', this.apiUrl);
+    return this.http.get<Agendamento[]>(`${this.apiUrl}/salas/${salaId}`);
+  }
+
    addAgendamento(agendamentoBody: AgendamentoReqBody, sala : Sala): Observable<{AgendamentoId : string}> {
     console.log('[AgendamentoService] Chamando API: ', this.apiUrl);
     return this.http.post<{AgendamentoId : string}>(`${this.apiUrl}/salas/${sala.id}`,agendamentoBody);

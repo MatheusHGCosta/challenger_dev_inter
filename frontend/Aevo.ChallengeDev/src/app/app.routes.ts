@@ -10,6 +10,7 @@ export const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'agendamentos', component: AgendamentoListComponent,canActivate: [AuthGuard]  },
+  { path: 'agendamentos/sala/:id', component: AgendamentoListComponent,canActivate: [AuthGuard]  },
   { path: 'agendamentos/novo', component: AgendamentoFormComponent,canActivate: [AuthGuard] },
   { path: 'agendamentos/editar/:id', component: AgendamentoFormComponent,canActivate: [AuthGuard] },
   { path: 'salas', component: SalaListComponent,canActivate: [AuthGuard]  },
