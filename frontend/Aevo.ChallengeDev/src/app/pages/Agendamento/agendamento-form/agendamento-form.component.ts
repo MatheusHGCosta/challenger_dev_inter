@@ -28,7 +28,7 @@ export interface AgendamentoReqBody{
   imports: [CommonModule, FormsModule, InputTextModule, ButtonModule,DatePicker,TranslateModule,RouterModule],
   providers: [TranslatePipe],
   templateUrl: './agendamento-form.component.html',
-  styleUrls: ['./agendamento-form.component.css']
+  styleUrl: './agendamento-form.component.scss'
 })
 export class AgendamentoFormComponent {
   

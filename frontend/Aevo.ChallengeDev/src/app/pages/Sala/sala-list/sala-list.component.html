@@ -1,15 +1,15 @@
-<div>
-    <button pButton label="{{'NOVO' | translate}}" class="p-button-info" [routerLink]="['/salas/novo']"></button>
+<div class="sala-container">
+  <div class="nova-sala">
+    <button pButton label="{{'NOVO' | translate}}" class="p-button-info novo-button" [routerLink]="['/salas/novo']"></button>
   </div>
-  
-  
-  <p-table [value]="(sala$ | async) ?? []" responsiveLayout="scroll">
+
+  <p-table [value]="(sala$ | async) ?? []" responsiveLayout="scroll" class="sala-tabela">
     <ng-template pTemplate="header">
       <tr>
-        <th>{{"NOME" | translate}}</th>
-        <th>{{"CAPACIDADE" | translate}}</th>
-        <th>{{"FUSOHORARIO" | translate}}</th>
-        <th>{{"ACOES" | translate}}</th>
+        <th>{{ "NOME" | translate }}</th>
+        <th>{{ "CAPACIDADE" | translate }}</th>
+        <th>{{ "FUSOHORARIO" | translate }}</th>
+        <th>{{ "ACOES" | translate }}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-sala>
@@ -17,12 +17,12 @@
         <td>{{ sala.nome }}</td>
         <td>{{ sala.capacidade }}</td>
         <td>{{ sala.fusoHorario }}</td>
-        <td>
-          <button pButton label="{{'Editar' | translate}}" [routerLink]="['/salas/editar', sala.id]"></button>
-          <button pButton label="{{'Excluir' | translate}}" class="p-button-danger" (click)="delete(sala.id)"></button>
-          <button pButton label="{{'Ver agendamentos' | translate}}" class="p-button-info" [routerLink]="['/agendamentos/sala', sala.id]"></button>
+        <td class="acoes">
+          <button pButton icon="pi pi-pencil" class="p-button-success" [routerLink]="['/salas/editar', sala.id]" title="{{'Editar' | translate}}"></button>
+          <button pButton icon="pi pi-trash" class="p-button-danger" (click)="delete(sala.id)" title="{{'Excluir' | translate}}"></button>
+          <button pButton icon="pi pi-calendar" class="p-button-info" [routerLink]="['/agendamentos/sala', sala.id]" title="{{'Ver agendamentos' | translate}}"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
-  
+</div>

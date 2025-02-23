@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {TranslateService,TranslateModule} from "@ngx-translate/core";
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './components/headerMain/headerMain.component';
 import { GlobalAlertComponent } from './components/global-alert/global-alert.component';
 @Component({
   selector: 'app-root',

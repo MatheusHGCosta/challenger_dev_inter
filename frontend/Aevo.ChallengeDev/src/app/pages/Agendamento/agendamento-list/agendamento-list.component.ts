@@ -13,7 +13,8 @@ import { AlertService } from '../../../services/alert.service';
   standalone: true,
   imports: [CommonModule, TableModule, ButtonModule, RouterModule,FormsModule,TranslateModule],
   providers: [TranslatePipe],
-  templateUrl: './agendamento-list.component.html'
+  templateUrl: './agendamento-list.component.html',
+  styleUrl: './agendamento-list.component.scss'
 })
 export class AgendamentoListComponent implements OnInit {
   agendamentos$!: Observable<Agendamento[]>;

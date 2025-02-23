@@ -15,7 +15,8 @@ import { Sala } from '../../Agendamento/agendamento-form/agendamento-form.compon
   standalone: true,
   imports: [CommonModule, TableModule, ButtonModule, RouterModule,FormsModule,TranslateModule],
   providers: [TranslatePipe],
-  templateUrl: './sala-list.component.html'
+  templateUrl: './sala-list.component.html',
+  styleUrl: './sala-list.component.scss'
 })
 export class SalaListComponent implements OnInit {
   sala$!: Observable<Sala[]>;

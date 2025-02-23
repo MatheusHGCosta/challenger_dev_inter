@@ -1,33 +1,43 @@
 <div class="form-container">
-    <h2>{{ (isEditMode ? 'EDITAR_AGENDAMENTO' : 'NOVO_AGENDAMENTO') | translate  }}</h2>
+  <h2>{{ (isEditMode ? 'EDITAR_AGENDAMENTO' : 'NOVO_AGENDAMENTO') | translate }}</h2>
 
-    <ng-container  *ngIf="agendamento">
-      <p-datepicker inputId="dtInicio" [(ngModel)]="agendamento.inicio" [showTime]="true" hourFormat="24"/>
-      <p-datepicker inputId="dtFim" [(ngModel)]="agendamento.fim" [showTime]="true" hourFormat="24" />
-      <div>
-        <p>{{agendamento.salaNome}}</p>
-      </div>
-    </ng-container>
+  <ng-container *ngIf="agendamento">
+    <div class="input-group">
+      <label for="dtInicio">{{ 'INICIO' | translate }}</label>
+      <p-datepicker inputId="dtInicio" [(ngModel)]="agendamento.inicio" [showTime]="true" hourFormat="24" placeholder="Selecione a data e hora de início"></p-datepicker>
+    </div>
+    
+    <div class="input-group">
+      <label for="dtFim">{{ 'FIM' | translate }}</label>
+      <p-datepicker inputId="dtFim" [(ngModel)]="agendamento.fim" [showTime]="true" hourFormat="24" placeholder="Selecione a data e hora de término"></p-datepicker>
+    </div>
+    
+    <div class="sala-selecionada">
+      <p>{{ agendamento.salaNome }}</p>
+    </div>
+  </ng-container>
 
-
-    <ng-container *ngIf="salas.length>0">
-      <label for="salaDropdown">Selecione uma Sala:</label>
+  <ng-container *ngIf="salas.length > 0">
+    <div class="input-group">
+      <label for="salaDropdown">{{ 'SELECIONE_SALA' | translate }}</label>
       <select id="salaDropdown" (change)="selecionarSala($event)">
-        <option value="" disabled selected>Escolha uma sala</option>
+        <option value="" disabled selected>{{ 'ESCOLHA_SALA' | translate }}</option>
         <option *ngFor="let sala of salas" [value]="sala.id">
           {{ sala.nome }}
         </option>
       </select>
-      
-      <div *ngIf="sala">
-        <h3>{{"DETALHE_SALA_SELECIONADA" | translate}}:</h3>
-        <p>Nome: {{ sala.nome }}</p>
-        <p>Capacidade: {{ sala.capacidade }}</p>
-        <p>Fuso Horário: {{ sala.fusoHorario }}</p>
-      </div>
+    </div>
 
-    </ng-container>
-    <button pButton label='{{"SALVAR" | translate}}'(click)="salvar()"></button>
-    <button pButton label='{{"CANCELAR" | translate}}' class="p-button-secondary" routerLink="/agendamentos"></button>
+    <div *ngIf="sala" class="sala-detalhe">
+      <h3>{{ "DETALHE_SALA_SELECIONADA" | translate }}:</h3>
+      <p>{{ 'NOME' | translate }}: {{ sala.nome }}</p>
+      <p>{{ 'CAPACIDADE' | translate }}: {{ sala.capacidade }}</p>
+      <p>{{ 'FUSO_HORARIO' | translate }}: {{ sala.fusoHorario }}</p>
+    </div>
+  </ng-container>
+
+  <div class="button-group">
+    <button pButton label="{{ 'SALVAR' | translate }}" (click)="salvar()" class="salvar-button"></button>
+    <button pButton label="{{ 'CANCELAR' | translate }}" class="p-button-secondary cancelar-button" routerLink="/agendamentos"></button>
   </div>
-  
+</div>

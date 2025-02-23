@@ -20,9 +20,9 @@ export interface SalaReqBody{
 @Component({
   selector: 'app-sala-form',
   imports: [TranslateModule, CommonModule, FormsModule, InputTextModule, ButtonModule, RouterModule, TimezoneDropdownComponent],
-  templateUrl: './sala-form.component.html',
   standalone:true,
   providers: [TranslatePipe],
+  templateUrl: './sala-form.component.html',
   styleUrl: './sala-form.component.scss'
 })
 export class SalaFormComponent {

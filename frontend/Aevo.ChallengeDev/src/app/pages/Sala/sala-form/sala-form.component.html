@@ -1,19 +1,27 @@
+<div *ngIf="sala" class="sala-form-container">
+  <h3>{{ "DETALHE_SALA_SELECIONADA" | translate }}:</h3>
 
-<div *ngIf="sala">
-    <h3>{{ "DETALHE_SALA_SELECIONADA" | translate }}:</h3>
+  <div class="input-group">
+    <label for="nome">{{ 'NOME' | translate }}:</label>
+    <input id="nome" type="text" pInputText [(ngModel)]="sala.nome" placeholder="{{ 'DIGITE_NOME' | translate }}" />
+  </div>
 
-    <label for="nome">{{'NOME' | translate}}:</label>
-    <input id="nome" type="text" pInputText [(ngModel)]="sala.nome" />
+  <div class="input-group">
+    <label for="capacidade">{{ 'CAPACIDADE' | translate }}:</label>
+    <input id="capacidade" type="number" pInputText [(ngModel)]="sala.capacidade" placeholder="{{ 'DIGITE_CAPACIDADE' | translate }}" />
+  </div>
 
-    <label for="capacidade">{{'CAPACIDADE' | translate}}:</label>
-    <input id="capacidade" type="number" pInputText [(ngModel)]="sala.capacidade" />
-    <app-timezone-dropdown *ngIf="isLoad || !id"
+  <div class="input-group">
+    <app-timezone-dropdown 
+      *ngIf="isLoad || !id"
       [initialTimezone]="sala.fusoHorario" 
       (timezoneChange)="capturarFusoHorario($event)"
-      label="{{'FUSOHORARIO' | translate}}:">
+      [label]="'FUSOHORARIO' | translate">
     </app-timezone-dropdown>
+  </div>
 
-    <button pButton label='{{"SALVAR" | translate}}'(click)="salvar()"></button>
-    <button pButton label='{{"CANCELAR" | translate}}' class="p-button-secondary" routerLink="/salas"></button>
+  <div class="button-group">
+    <button pButton label="{{ 'SALVAR' | translate }}" class="p-button-success" (click)="salvar()"></button>
+    <button pButton label="{{ 'CANCELAR' | translate }}" class="p-button-secondary" routerLink="/salas"></button>
+  </div>
 </div>
-

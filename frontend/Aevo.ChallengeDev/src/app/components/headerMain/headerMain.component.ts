@@ -7,8 +7,8 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, DropdownModule,FormsModule,TranslateModule],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  templateUrl: './headerMain.component.html',
+  styleUrl: './headerMain.component.scss'
 })
 export class HeaderComponent {
   translate = inject(TranslateService);

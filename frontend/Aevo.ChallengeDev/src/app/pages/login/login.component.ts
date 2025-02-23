@@ -17,6 +17,7 @@ import { AlertService } from '../../services/alert.service';
   imports: [RouterModule,CommonModule, ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule, CardModule,TranslateModule],
   providers: [TranslatePipe],
   templateUrl: './login.component.html',
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   loginForm: FormGroup;
