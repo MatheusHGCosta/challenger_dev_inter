@@ -135,6 +135,9 @@ public class AgendamentosTests(IntegrationTestFactory factory) : TestBase(factor
         var criarResult = await criarResponse.Content.ReadFromJsonAsync<CriarAgendamentoResponse>(cancellationToken: TestContext.Current.CancellationToken);
         Assert.NotNull(criarResult);
 
+        // Estava faltando logar como outro usuário para o teste "falhar" com sucesso.
+        LoginAs(UsuariosDeTestePredefinidos.JohnDoe);
+
         // Act
         var response = await Http.DeleteAsync($"agendamentos/{criarResult.AgendamentoId}", TestContext.Current.CancellationToken);
 
