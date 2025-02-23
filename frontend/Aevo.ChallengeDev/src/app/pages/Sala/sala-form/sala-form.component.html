@@ -1,1 +1,19 @@
-<p>sala-form works!</p>
+
+<div *ngIf="sala">
+    <h3>{{ "DETALHE_SALA_SELECIONADA" | translate }}:</h3>
+
+    <label for="nome">{{'NOME' | translate}}:</label>
+    <input id="nome" type="text" pInputText [(ngModel)]="sala.nome" />
+
+    <label for="capacidade">{{'CAPACIDADE' | translate}}:</label>
+    <input id="capacidade" type="number" pInputText [(ngModel)]="sala.capacidade" />
+    <app-timezone-dropdown *ngIf="isLoad || !id"
+      [initialTimezone]="sala.fusoHorario" 
+      (timezoneChange)="capturarFusoHorario($event)"
+      label="{{'FUSOHORARIO' | translate}}:">
+    </app-timezone-dropdown>
+
+    <button pButton label='{{"SALVAR" | translate}}'(click)="salvar()"></button>
+    <button pButton label='{{"CANCELAR" | translate}}' class="p-button-secondary" routerLink="/salas"></button>
+</div>
+
