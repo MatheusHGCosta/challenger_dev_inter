@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class HeaderComponent {
   translate = inject(TranslateService);
-  
   languages = [
     { label: 'Português', code: 'pt-BR' },
     { label: 'English', code: 'en-US' },
