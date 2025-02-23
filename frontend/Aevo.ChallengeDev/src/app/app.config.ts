@@ -4,7 +4,7 @@ import { TranslateModule, TranslateLoader} from "@ngx-translate/core";
 import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { appRoutes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { HttpClient, provideHttpClient,withInterceptorsFromDi} from '@angular/common/http';
+import { HttpClient, provideHttpClient,withInterceptorsFromDi,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -15,8 +15,8 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withInterceptorsFromDi()), // Certifica que os interceptors de classe sejam registrados corretamente
-    { provide: AuthInterceptor, useClass: AuthInterceptor }, // Registrar explicitamente o interceptor
+    provideHttpClient(withInterceptorsFromDi()), // Registra interceptores via DI
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(appRoutes), 
     provideAnimations(),
