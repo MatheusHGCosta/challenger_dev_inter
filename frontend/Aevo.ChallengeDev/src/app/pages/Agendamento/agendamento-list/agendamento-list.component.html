@@ -1,6 +1,6 @@
 <div class="agendamentos-container">
   <div class="novo-agendamento">
-    <button pButton label="{{'NOVO' | translate}}" class="p-button-info novo-button" [routerLink]="['/agendamentos/novo']"></button>
+    <button pButton label="{{'NOVO' | translate}}" class="p-button-info novo-button" [routerLink]="['/menu/agendamentos/novo']"></button>
   </div>
 
   <p-table [value]="(agendamentos$ | async) ?? []" responsiveLayout="scroll" class="agendamentos-tabela">
@@ -20,7 +20,7 @@
         <td>{{ agendamento.inicio | date:'dd/MM/yyyy HH:mm' }}</td>
         <td>{{ agendamento.fim | date:'dd/MM/yyyy HH:mm' }}</td>
         <td *ngIf="!idSala" class="acoes">
-          <button pButton icon="pi pi-pencil" class="p-button-success" [routerLink]="['/agendamentos/editar', agendamento.id]"></button>
+          <button pButton icon="pi pi-pencil" class="p-button-success" [routerLink]="['/menu/agendamentos/editar', agendamento.id]"></button>
           <button pButton icon="pi pi-trash" class="p-button-danger" (click)="delete(agendamento.id)"></button>
         </td>
       </tr>

@@ -1,6 +1,6 @@
 <div class="sala-container">
   <div class="nova-sala">
-    <button pButton label="{{'NOVO' | translate}}" class="p-button-info novo-button" [routerLink]="['/salas/novo']"></button>
+    <button pButton label="{{'NOVO' | translate}}" class="p-button-info novo-button" [routerLink]="['/menu/salas/novo']"></button>
   </div>
 
   <p-table [value]="(sala$ | async) ?? []" responsiveLayout="scroll" class="sala-tabela">
@@ -18,9 +18,9 @@
         <td>{{ sala.capacidade }}</td>
         <td>{{ sala.fusoHorario }}</td>
         <td class="acoes">
-          <button pButton icon="pi pi-pencil" class="p-button-success" [routerLink]="['/salas/editar', sala.id]" title="{{'Editar' | translate}}"></button>
+          <button pButton icon="pi pi-pencil" class="p-button-success" [routerLink]="['/menu/salas/editar', sala.id]" title="{{'Editar' | translate}}"></button>
           <button pButton icon="pi pi-trash" class="p-button-danger" (click)="delete(sala.id)" title="{{'Excluir' | translate}}"></button>
-          <button pButton icon="pi pi-calendar" class="p-button-info" [routerLink]="['/agendamentos/sala', sala.id]" title="{{'Ver agendamentos' | translate}}"></button>
+          <button pButton icon="pi pi-calendar" class="p-button-info" [routerLink]="['/menu/agendamentos/sala', sala.id]" title="{{'Ver agendamentos' | translate}}"></button>
         </td>
       </tr>
     </ng-template>

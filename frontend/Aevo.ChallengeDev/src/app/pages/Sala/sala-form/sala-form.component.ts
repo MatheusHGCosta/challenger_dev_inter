@@ -72,7 +72,7 @@ export class SalaFormComponent {
           this.salaService.editSala(salaReq,this.id).subscribe({
              next: (suc) => {
               this.alertCtrl.showSuccess('ALERTAS.SALA_EDITADA');
-              this.router.navigate(['/salas']);
+              this.router.navigate(['/menu/salas']);
             },
             error: (err) => {
               this.alertCtrl.showError('ALERTAS.SALA_ERRO_EDITAR');
@@ -82,7 +82,7 @@ export class SalaFormComponent {
           this.salaService.addSala(salaReq).subscribe({
             next: () => {
               this.alertCtrl.showSuccess('ALERTAS.SALA_CRIADA');
-              this.router.navigate(['/salas']);
+              this.router.navigate(['/menu/salas']);
            },
            error: () => {
              this.alertCtrl.showError('ALERTAS.SALA_ERRO_CRIAR');

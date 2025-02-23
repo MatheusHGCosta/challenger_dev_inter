@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { BreadcrumbComponent } from "../breadcrumb/myBreadcrumb.component";
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, DropdownModule,FormsModule,TranslateModule],
+  imports: [CommonModule, DropdownModule, FormsModule, TranslateModule, BreadcrumbComponent],
   templateUrl: './headerMain.component.html',
   styleUrl: './headerMain.component.scss'
 })

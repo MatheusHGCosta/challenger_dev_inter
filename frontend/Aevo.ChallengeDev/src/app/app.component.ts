@@ -6,7 +6,7 @@ import { GlobalAlertComponent } from './components/global-alert/global-alert.com
 @Component({
   selector: 'app-root',
   standalone: true,                                    
-  imports: [TranslateModule,RouterOutlet,HeaderComponent,GlobalAlertComponent],                          
+  imports: [TranslateModule, RouterOutlet, HeaderComponent, GlobalAlertComponent],                          
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -17,3 +17,4 @@ export class AppComponent {
     this.translate.use('pt-BR');
   }
 }
+

@@ -109,7 +109,7 @@ export class AgendamentoFormComponent {
       this.agendamentoService.editAgendamento(agendamentoReq,this.id).subscribe({
          next: (suc) => {
           this.alertCtrl.showSuccess('ALERTAS.AGENDAMENTO_EDITADO');
-          this.router.navigate(['/agendamentos']);
+          this.router.navigate(['/menu/agendamentos']);
         },
         error: (err) => {
           this.alertCtrl.showError(err?.error?.[0]?.errorMessage || 'ALERTAS.AGENDAMENTO_ERRO_EDITAR');
@@ -125,7 +125,7 @@ export class AgendamentoFormComponent {
       this.agendamentoService.addAgendamento(agendamentoReq,this.sala).subscribe({
         next: () => {
           this.alertCtrl.showSuccess('ALERTAS.AGENDAMENTO_CRIADO');
-          this.router.navigate(['/agendamentos']);
+          this.router.navigate(['/menu/agendamentos']);
        },
        error: (err) => {
         this.alertCtrl.showError(err?.error?.[0]?.errorMessage || 'ALERTAS.AGENDAMENTO_ERRO_CRIAR');
