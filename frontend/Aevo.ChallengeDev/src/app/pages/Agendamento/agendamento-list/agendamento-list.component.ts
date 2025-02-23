@@ -4,10 +4,10 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AgendamentoService, Agendamento } from '../../services/agendamento.service';
+import { AgendamentoService, Agendamento } from '../../../services/agendamento.service';
 import { Observable } from 'rxjs';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
-import { AlertService } from '../../services/alert.service';
+import { AlertService } from '../../../services/alert.service';
 @Component({
   selector: 'app-agendamento-list',
   standalone: true,
@@ -31,21 +31,11 @@ export class AgendamentoListComponent implements OnInit {
   delete(id: string) {
     this.agendamentoService.deleteAgendamento(id).subscribe({
       next: () => {
-        let sucesso = {
-          severity: 'contrast', 
-          summary: this.translatePipe.transform('ALERTAS.SUCESSO'), 
-          detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_EXCLUIDO')
-        }
+        this.alertCtrl.showSuccess(this.translatePipe.transform('ALERTAS.AGENDAMENTO_EXCLUIDO'));
         this.agendamentos$ = this.agendamentoService.getAgendamentos();
-        this.alertCtrl.showMessage(sucesso);
      },
      error: () =>{
-      let erro = {
-        severity: 'contrast', 
-        summary: this.translatePipe.transform('ALERTAS.ERRO'), 
-        detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_EXCLUIR')
-      }
-      this.alertCtrl.showMessage(erro);
+      this.alertCtrl.showError(this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_EXCLUIR'));
     }
    });
   }

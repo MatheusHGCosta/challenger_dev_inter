@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { AgendamentoService, Agendamento } from '../../services/agendamento.service';
+import { AgendamentoService, Agendamento } from '../../../services/agendamento.service';
 import { DatePicker } from 'primeng/datepicker';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
-import { AlertService } from '../../services/alert.service';
+import { AlertService } from '../../../services/alert.service';
+import { SalaService } from '../../../services/sala.service';
 export interface Sala {
   id: string; 
   nome: string;
@@ -42,6 +43,8 @@ export class AgendamentoFormComponent {
     fusoHorario: 'Europe/Berlin'
   }
 
+
+  salas:Sala[] =[]
   isEditMode = false;
 
   constructor(
@@ -49,7 +52,8 @@ export class AgendamentoFormComponent {
     private alertCtrl : AlertService,
     private route : ActivatedRoute,
     private router : Router,
-    private agendamentoService : AgendamentoService
+    private agendamentoService : AgendamentoService,
+    private salaService : SalaService
   ) {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
@@ -71,6 +75,14 @@ export class AgendamentoFormComponent {
         })
       }
     });
+    this.salaService.getSalas().subscribe({
+      next: (suc) => {
+        this.salas=suc
+     },
+     error: (err) => {
+       this.alertCtrl.showError(this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_CARREGAR_SALA'));
+     }
+   });
   }
 
   salvar() {
@@ -82,48 +94,24 @@ export class AgendamentoFormComponent {
       fim : this.agendamento.fim,
       inicio : this.agendamento.inicio
     }
-
-
-
-
     if (this.id) {
       this.agendamentoService.editAgendamento(agendamentoReq,this.id).subscribe({
          next: (suc) => {
-          let sucesso = {
-            severity: 'success', 
-            summary: this.translatePipe.transform('ALERTAS.SUCESSO'), 
-            detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_EDITADO')
-          }
-          this.alertCtrl.showMessage(sucesso);
+          this.alertCtrl.showSuccess(this.translatePipe.transform('ALERTAS.AGENDAMENTO_EDITADO'));
           this.router.navigate(['/agendamentos']);
         },
         error: (err) => {
-          let erro = {
-            severity: 'contrast', 
-            summary: this.translatePipe.transform('ALERTAS.ERRO'), 
-            detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_EDITAR')
-          }
-          this.alertCtrl.showMessage(erro);
+          this.alertCtrl.showError(this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_EDITAR'));
         }
       });
     } else {
       this.agendamentoService.addAgendamento(agendamentoReq,this.sala).subscribe({
         next: () => {
-          let sucesso = {
-            severity: 'success', 
-            summary: this.translatePipe.transform('ALERTAS.SUCESSO'), 
-            detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_CRIADO')
-          }
-          this.alertCtrl.showMessage(sucesso);
+          this.alertCtrl.showSuccess(this.translatePipe.transform('ALERTAS.AGENDAMENTO_CRIADO'));
           this.router.navigate(['/agendamentos']);
        },
        error: () => {
-         let erro = {
-           severity: 'contrast', 
-           summary: this.translatePipe.transform('ALERTAS.ERRO'), 
-           detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_CRIAR')
-         }
-         this.alertCtrl.showMessage(erro);
+         this.alertCtrl.showError(this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_CRIAR'));
        }
      });
     };

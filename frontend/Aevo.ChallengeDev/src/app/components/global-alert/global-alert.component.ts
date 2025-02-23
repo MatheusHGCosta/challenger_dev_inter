@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { AlertService } from '../services/alert.service';
+import { AlertService } from '../../services/alert.service';
 import { Toast } from 'primeng/toast';
 
 @Component({

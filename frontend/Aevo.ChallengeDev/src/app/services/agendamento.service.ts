@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AgendamentoReqBody, Sala } from '../components/agendamento-form/agendamento-form.component';
+import { AgendamentoReqBody,Sala } from '../pages/Agendamento/agendamento-form/agendamento-form.component';
 
 
 export interface Agendamento {

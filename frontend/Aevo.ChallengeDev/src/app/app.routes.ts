@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { AgendamentoListComponent } from './components/agendamento-list/agendamento-list.component';
-import { AgendamentoFormComponent } from './components/agendamento-form/agendamento-form.component';
-import { LoginComponent } from './components/login/login.component';
+import { AgendamentoListComponent } from './pages/Agendamento/agendamento-list/agendamento-list.component';
+import { AgendamentoFormComponent } from './pages/Agendamento/agendamento-form/agendamento-form.component';
+import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './auth.guard';
 export const appRoutes: Routes = [
   { path: '', component: LoginComponent },
