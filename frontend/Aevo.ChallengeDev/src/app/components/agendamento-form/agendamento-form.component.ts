@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AgendamentoService, Agendamento } from '../../services/agendamento.service';
 import { DatePicker } from 'primeng/datepicker';
-import { setAlternateWeakRefImpl } from '@angular/core/primitives/signals';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { AlertService } from '../../services/alert.service';
 export interface Sala {
   id: string; 
   nome: string;
@@ -24,14 +24,12 @@ export interface AgendamentoReqBody{
 @Component({
   selector: 'app-agendamento-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule, ButtonModule,DatePicker,TranslateModule],
+  imports: [CommonModule, FormsModule, InputTextModule, ButtonModule,DatePicker,TranslateModule,RouterModule],
+  providers: [TranslatePipe],
   templateUrl: './agendamento-form.component.html',
   styleUrls: ['./agendamento-form.component.css']
 })
 export class AgendamentoFormComponent {
-  private agendamentoService = inject(AgendamentoService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
   
   id : string | null = '';
   agendamento : Agendamento | null = null;
@@ -46,14 +44,19 @@ export class AgendamentoFormComponent {
 
   isEditMode = false;
 
-  constructor() {
+  constructor(
+    private translatePipe : TranslatePipe,
+    private alertCtrl : AlertService,
+    private route : ActivatedRoute,
+    private router : Router,
+    private agendamentoService : AgendamentoService
+  ) {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
       if (this.id) {
         this.isEditMode = true;
         this.agendamentoService.getAgendamentos().subscribe(agendamentos => {
           const agendamentoExistente = agendamentos.find(a => a.id === this.id);
-          console.log(agendamentoExistente)
           if (agendamentoExistente) {
             this.agendamento = {
                 id: agendamentoExistente.id,
@@ -64,7 +67,6 @@ export class AgendamentoFormComponent {
                 inicio: new Date(agendamentoExistente.inicio),
                 fim: new Date(agendamentoExistente.fim)
             }
-            console.log(this.agendamento)
           }
         })
       }
@@ -87,14 +89,45 @@ export class AgendamentoFormComponent {
     if (this.id) {
       this.agendamentoService.editAgendamento(agendamentoReq,this.id).subscribe({
          next: (suc) => {
-          alert("sdhasodjasiod")
+          let sucesso = {
+            severity: 'success', 
+            summary: this.translatePipe.transform('ALERTAS.SUCESSO'), 
+            detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_EDITADO')
+          }
+          this.alertCtrl.showMessage(sucesso);
+          this.router.navigate(['/agendamentos']);
         },
-        error: (err) => alert(err)
+        error: (err) => {
+          let erro = {
+            severity: 'contrast', 
+            summary: this.translatePipe.transform('ALERTAS.ERRO'), 
+            detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_EDITAR')
+          }
+          this.alertCtrl.showMessage(erro);
+        }
       });
     } else {
-      this.agendamentoService.addAgendamento(agendamentoReq,this.sala);
-    }
-    this.router.navigate(['/']);
+      this.agendamentoService.addAgendamento(agendamentoReq,this.sala).subscribe({
+        next: () => {
+          let sucesso = {
+            severity: 'success', 
+            summary: this.translatePipe.transform('ALERTAS.SUCESSO'), 
+            detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_CRIADO')
+          }
+          this.alertCtrl.showMessage(sucesso);
+          this.router.navigate(['/agendamentos']);
+       },
+       error: () => {
+         let erro = {
+           severity: 'contrast', 
+           summary: this.translatePipe.transform('ALERTAS.ERRO'), 
+           detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_CRIAR')
+         }
+         this.alertCtrl.showMessage(erro);
+       }
+     });
+    };
+    
   }
   
 }

@@ -6,26 +6,47 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AgendamentoService, Agendamento } from '../../services/agendamento.service';
 import { Observable } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
-
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { AlertService } from '../../services/alert.service';
 @Component({
   selector: 'app-agendamento-list',
   standalone: true,
   imports: [CommonModule, TableModule, ButtonModule, RouterModule,FormsModule,TranslateModule],
+  providers: [TranslatePipe],
   templateUrl: './agendamento-list.component.html'
 })
 export class AgendamentoListComponent implements OnInit {
-  agendamentoService = inject(AgendamentoService);
   agendamentos$!: Observable<Agendamento[]>;
   ngOnInit(): void {
     this.agendamentos$ = this.agendamentoService.getAgendamentos();
   }
+
+  constructor(
+    private translatePipe : TranslatePipe,
+    private agendamentoService : AgendamentoService,
+    private alertCtrl : AlertService
+  ){
+
+  }
   delete(id: string) {
     this.agendamentoService.deleteAgendamento(id).subscribe({
-      next: (suc) => {
+      next: () => {
+        let sucesso = {
+          severity: 'contrast', 
+          summary: this.translatePipe.transform('ALERTAS.SUCESSO'), 
+          detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_EXCLUIDO')
+        }
         this.agendamentos$ = this.agendamentoService.getAgendamentos();
+        this.alertCtrl.showMessage(sucesso);
      },
-     error: (err) => alert(err)
+     error: () =>{
+      let erro = {
+        severity: 'contrast', 
+        summary: this.translatePipe.transform('ALERTAS.ERRO'), 
+        detail: this.translatePipe.transform('ALERTAS.AGENDAMENTO_ERRO_EXCLUIR')
+      }
+      this.alertCtrl.showMessage(erro);
+    }
    });
   }
 }

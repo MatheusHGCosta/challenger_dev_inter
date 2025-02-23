@@ -7,13 +7,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslateModule , TranslatePipe} from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [RouterModule,CommonModule, ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule, CardModule,TranslateModule],
+  providers: [TranslatePipe],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -23,7 +25,9 @@ export class LoginComponent {
     private fb: FormBuilder, 
     private authService: AuthService, 
     private router: Router,
-    private translate : TranslateService
+    private translate : TranslateService,
+    private alertCtrl : AlertService,
+    private translatePipe: TranslatePipe
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -39,7 +43,14 @@ export class LoginComponent {
           this.translate.use(suc.idioma);
           this.router.navigate(['/agendamentos'])
         },
-        error: (err) => this.errorMessage = 'Erro ao fazer login. Verifique suas credenciais.'
+        error: () =>  {
+          let erro = {
+            severity: 'contrast', 
+            summary: this.translatePipe.transform('ALERTAS.ERRO'), 
+            detail: this.translatePipe.transform('ALERTAS.ERRO_LOGIN')
+          }
+          this.alertCtrl.showMessage(erro);
+        }
       });
     }
   }
