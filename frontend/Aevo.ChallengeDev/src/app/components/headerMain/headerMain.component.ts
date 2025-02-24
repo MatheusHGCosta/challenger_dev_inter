@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { BreadcrumbComponent } from "../breadcrumb/myBreadcrumb.component";
+import { BreadcrumbComponent } from "../myBreadcrumb/myBreadcrumb.component";
 @Component({
   selector: 'app-header',
   standalone: true,
