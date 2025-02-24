@@ -10,13 +10,13 @@ import { NgModule } from '@angular/core';
 export const appRoutes: Routes = [
   { path: '', component: LoginComponent, data: { breadcrumb: 'Login' } },
   { path: 'menu', component: MenuComponent, data: { breadcrumb: 'Menu' } },
-  { path: 'menu/agendamentos', component: AgendamentoListComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Agendamentos' } },
-  { path: 'menu/agendamentos/sala/:id', component: AgendamentoListComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Agendamentos por Sala' } },
-  { path: 'menu/agendamentos/novo', component: AgendamentoFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Novo Agendamento' } },
-  { path: 'menu/agendamentos/editar/:id', component: AgendamentoFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Editar Agendamento' } },
-  { path: 'menu/salas', component: SalaListComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Salas' } },
-  { path: 'menu/salas/novo', component: SalaFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Nova Sala' } },
-  { path: 'menu/salas/editar/:id', component: SalaFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'Editar Sala' } },
+  { path: 'menu/agendamentos', component: AgendamentoListComponent, canActivate: [AuthGuard], data: { breadcrumb: 'BREADCRUMB.AGENDAMENTOS' } },
+  { path: 'menu/agendamentos/sala/:id', component: AgendamentoListComponent, canActivate: [AuthGuard], data: { breadcrumb: 'BREADCRUMB.AGENDAMENTOS_POR_SALA' } },
+  { path: 'menu/agendamentos/novo', component: AgendamentoFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'BREADCRUMB.NOVO_AGENDAMENTO' } },
+  { path: 'menu/agendamentos/editar/:id', component: AgendamentoFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'BREADCRUMB.EDITAR_AGENDAMENTO' } },
+  { path: 'menu/salas', component: SalaListComponent, canActivate: [AuthGuard], data: { breadcrumb: 'BREADCRUMB.SALAS' } },
+  { path: 'menu/salas/novo', component: SalaFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'BREADCRUMB.NOVA_SALA' } },
+  { path: 'menu/salas/editar/:id', component: SalaFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'BREADCRUMB.EDITAR_SALA' } },
 ];
 
 

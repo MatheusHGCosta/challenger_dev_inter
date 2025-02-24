@@ -12,7 +12,7 @@ import { SalaService } from '../../../services/sala.service';
 export interface Sala {
   id: string; 
   nome: string;
-  descricao?: string | null;
+  descricao: string ;
   capacidade: number;
   fusoHorario: string;
 }

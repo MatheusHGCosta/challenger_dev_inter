@@ -14,7 +14,8 @@ import { TimezoneDropdownComponent } from "../../../components/timezone/timezone
 export interface SalaReqBody{
   nome: string,
   capacidade: number,
-  fusoHorario: string
+  fusoHorario: string,
+  descricao: string
 }
 
 @Component({
@@ -66,7 +67,8 @@ export class SalaFormComponent {
         let salaReq : SalaReqBody = {
           nome: this.sala.nome,
           capacidade: this.sala.capacidade,
-          fusoHorario: this.sala.fusoHorario
+          fusoHorario: this.sala.fusoHorario,
+          descricao: this.sala.descricao
         }
         if (this.id) {
           this.salaService.editSala(salaReq,this.id).subscribe({

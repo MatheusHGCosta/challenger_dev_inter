@@ -2,6 +2,9 @@
   <h2>{{ (isEditMode ? 'EDITAR_AGENDAMENTO' : 'NOVO_AGENDAMENTO') | translate }}</h2>
 
   <ng-container *ngIf="agendamento">
+    <div class="sala-selecionada">
+      <p>{{ agendamento.salaNome }}</p>
+    </div>
     <div class="input-group">
       <label for="dtInicio">{{ 'INICIO' | translate }}</label>
       <p-datepicker inputId="dtInicio" [(ngModel)]="agendamento.inicio" [showTime]="true" hourFormat="24" placeholder="Selecione a data e hora de início"></p-datepicker>
@@ -12,9 +15,7 @@
       <p-datepicker inputId="dtFim" [(ngModel)]="agendamento.fim" [showTime]="true" hourFormat="24" placeholder="Selecione a data e hora de término"></p-datepicker>
     </div>
     
-    <div class="sala-selecionada">
-      <p>{{ agendamento.salaNome }}</p>
-    </div>
+    
   </ng-container>
 
   <ng-container *ngIf="salas.length > 0">
@@ -33,6 +34,7 @@
       <p>{{ 'NOME' | translate }}: {{ sala.nome }}</p>
       <p>{{ 'CAPACIDADE' | translate }}: {{ sala.capacidade }}</p>
       <p>{{ 'FUSO_HORARIO' | translate }}: {{ sala.fusoHorario }}</p>
+      <p>{{ 'DESCRICAO' | translate }}: {{ sala.descricao }}</p>
     </div>
   </ng-container>
 

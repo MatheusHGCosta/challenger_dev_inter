@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MenuItem } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class BreadcrumbService {
   private breadcrumbItems = new BehaviorSubject<MenuItem[]>([]);
   breadcrumbItems$ = this.breadcrumbItems.asObservable();
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private translateService : TranslateService
+  ) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -35,11 +39,14 @@ export class BreadcrumbService {
       accumulatedUrl += `/${segment}`;
   
       const breadcrumbLabel = this.capitalize(segment);
+      debugger
+      if (breadcrumbLabel){
+        breadcrumbs.push({
+          label: this.translateService.instant(breadcrumbLabel),
+          routerLink: accumulatedUrl
+        });
+      }
       
-      breadcrumbs.push({
-        label: breadcrumbLabel,
-        routerLink: accumulatedUrl
-      });
     });
   
     return breadcrumbs;

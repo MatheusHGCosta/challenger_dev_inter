@@ -7,6 +7,11 @@
   </div>
 
   <div class="input-group">
+    <label for="nome">{{ 'DESCRICAO' | translate }}:</label>
+    <input id="nome" type="text" pInputText [(ngModel)]="sala.descricao" placeholder="{{ 'DIGITE_DESCRICAO' | translate }}" />
+  </div>
+
+  <div class="input-group">
     <label for="capacidade">{{ 'CAPACIDADE' | translate }}:</label>
     <input id="capacidade" type="number" pInputText [(ngModel)]="sala.capacidade" placeholder="{{ 'DIGITE_CAPACIDADE' | translate }}" />
   </div>
