@@ -38,14 +38,15 @@ public class CriarAgendamentoHandler(Context context) : ICaseHandler<CriarAgenda
 {
 
 
-    public async Task<bool> VerificaConflito(Guid salaId, DateTime inicio, DateTime fim)
+    public async Task<bool> VerificaConflito(Guid salaId, Guid agendamentoId, DateTime inicio, DateTime fim)
     {
         return await context.Agendamentos
             .AnyAsync(a =>
                 a.SalaId == salaId &&
                 ((inicio >= a.Inicio && inicio < a.Fim) ||
                  (fim > a.Inicio && fim <= a.Fim) ||
-                 (inicio <= a.Inicio && fim >= a.Fim)));
+                 (inicio <= a.Inicio && fim >= a.Fim))
+                 && a.Id != agendamentoId);
     }
 
     public async Task<Result<CriarAgendamentoResponse>> Handle(CriarAgendamento req, CancellationToken ct)
@@ -75,7 +76,7 @@ public class CriarAgendamentoHandler(Context context) : ICaseHandler<CriarAgenda
             });
         }
 
-        if (await VerificaConflito(agendamento.SalaId, agendamento.Inicio, agendamento.Fim))
+        if (await VerificaConflito(agendamento.SalaId,agendamento.Id, agendamento.Inicio, agendamento.Fim))
         {
 
             return Result.Invalid(new AppError()
