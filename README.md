@@ -61,7 +61,21 @@ Serão considerados pontos positivos, porém não são obrigatórios:
 
 <br>
 
-Qualquer problema ou dificuldade com o repositório, você pode entrar em contato conosco pelos e-mails, carlos.pedroni@aevo.com.br ou rh@aevo.com.br para que possamos sanar todas as dúvidas!
-<br><br>
-Estamos sempre em busca de melhoria. Por isso, caso tenha alguma sugestão, fique à vontade para compartilhar conosco! Boa sorte! 💛
+## Postman
+Criei uma documentação no postman os endpoints:
+
+### Agendamentos
+https://documenter.getpostman.com/view/17912865/2sAYdcsCq9
+
+### Salas
+https://documenter.getpostman.com/view/17912865/2sAYdcsCqA
+
+### Usuários
+https://documenter.getpostman.com/view/17912865/2sAYdcsCqB
+
+
+## Uso de IA
+Foi usado o CHATGPT para gerar a base de alguns components e também para a replicação do json de internacionalização com base no pt-BR.
+
+
 
