@@ -70,12 +70,22 @@ public class EditarAgendamentoHandler(Context context) : ICaseHandler<EditarAgen
         agendamento.Inicio = FusoHorarioService.ConverterFuso(req.Inicio, usuario.FusoHorario, sala.FusoHorario);
         agendamento.Fim = FusoHorarioService.ConverterFuso(req.Fim, usuario.FusoHorario, sala.FusoHorario);
 
+        if (agendamento.Inicio > agendamento.Fim)
+        {
+
+            return Result.Invalid(new AppError()
+            {
+                ErrorCode = "400",
+                ErrorMessage = "ALERTAS.AGENDAMENTO_INVALIDO_DATAINICIAL_MENOR"
+            });
+        }
+
         if (await VerificaConflito(agendamento.SalaId,agendamento.Id,agendamento.Inicio,agendamento.Fim))
         {
             
             return Result.Invalid(new AppError()
             {
-                ErrorCode = "501",
+                ErrorCode = "400",
                 ErrorMessage = "ALERTAS.AGENDAMENTO_EXISTENTE"
             });
         }

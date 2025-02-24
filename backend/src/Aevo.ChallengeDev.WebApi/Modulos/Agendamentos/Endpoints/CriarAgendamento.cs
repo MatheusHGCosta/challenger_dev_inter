@@ -65,12 +65,22 @@ public class CriarAgendamentoHandler(Context context) : ICaseHandler<CriarAgenda
             Descricao =""
         };
 
+        if (agendamento.Inicio > agendamento.Fim)
+        {
+
+            return Result.Invalid(new AppError()
+            {
+                ErrorCode = "400",
+                ErrorMessage = "ALERTAS.AGENDAMENTO_INVALIDO_DATAINICIAL_MENOR"
+            });
+        }
+
         if (await VerificaConflito(agendamento.SalaId, agendamento.Inicio, agendamento.Fim))
         {
 
             return Result.Invalid(new AppError()
             {
-                ErrorCode = "501",
+                ErrorCode = "400",
                 ErrorMessage = "ALERTAS.AGENDAMENTO_EXISTENTE"
             });
         }

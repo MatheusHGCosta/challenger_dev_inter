@@ -1,4 +1,5 @@
 using Aevo.ChallengeDev.WebApi.Core;
+using Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Models;
 using Aevo.CommonLib.Results;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,8 +11,15 @@ public class ExcluirSalaHandler(Context context) : ICaseHandler<ExcluirSala, Uni
 {
     public async Task<Result<Unit>> Handle(ExcluirSala req, CancellationToken ct)
     {
-        await context.Salas.Where(s => s.Id == req.SalaId)
-            .ExecuteDeleteAsync(cancellationToken: ct);
+
+        var sala = await context.Salas.FindAsync([req.SalaId], ct);
+
+        if (sala == null)
+        {
+            return Result.NotFound();
+        }
+        context.Salas.Remove(sala);
+        await context.SaveChangesAsync(ct);
 
         return Result.NoContent();
     }

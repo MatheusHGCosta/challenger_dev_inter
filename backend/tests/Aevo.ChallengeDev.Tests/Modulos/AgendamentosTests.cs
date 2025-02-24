@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using Aevo.ChallengeDev.Tests.Core;
 using Aevo.ChallengeDev.WebApi.Modulos.Agendamentos.Endpoints;
+using Microsoft.EntityFrameworkCore;
 
 namespace Aevo.ChallengeDev.Tests.Modulos;
 
@@ -190,6 +191,85 @@ public class AgendamentosTests(IntegrationTestFactory factory) : TestBase(factor
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
-    
-    // TODO: Expanda os casos de teste, e teste os endpoints faltantes.
+
+    [Fact]
+    public async Task CriarAgendamento_VerificaCriacao()
+    {
+        var salaId = SalasDeTestePredefinidas.SalaReuniaoSP.Id;
+
+        // Arrange
+        LoginAs(UsuariosDeTestePredefinidos.JoaoSilva);
+
+        var req = new CriarAgendamentoReqBody
+        {
+            Inicio = new DateTime(2025, 02, 14, 10, 00, 00),
+            Fim = new DateTime(2025, 02, 14, 10, 45, 00)
+        };
+
+        // Act
+        var criar = await Http.PostAsJsonAsync($"agendamentos/salas/{salaId}", req, cancellationToken: TestContext.Current.CancellationToken);
+        var criarResult = await criar.Content.ReadFromJsonAsync<CriarAgendamentoResponse>(cancellationToken: TestContext.Current.CancellationToken);
+
+        // Assert
+        Assert.NotNull(criarResult);
+
+        var carregar = await Http.GetAsync($"agendamentos/", TestContext.Current.CancellationToken);
+        var carregarResult = await carregar.Content.ReadFromJsonAsync<AgendamentoView[]>(cancellationToken: TestContext.Current.CancellationToken);
+        Assert.NotNull(carregarResult);
+
+        Assert.Contains(carregarResult, a => a.Id == criarResult.AgendamentoId);
+    }
+
+
+    [Fact]
+    public async Task CriarAgendamento_DeveFalharPorInicioMaiorQueFim()
+    {
+        var salaId = SalasDeTestePredefinidas.SalaReuniaoSP.Id;
+
+        // Arrange
+        LoginAs(UsuariosDeTestePredefinidos.JoaoSilva);
+
+        var criarRequest = new CriarAgendamentoReqBody
+        {
+            Inicio = new DateTime(2025, 05, 14, 10, 00, 00),
+            Fim = new DateTime(2025, 02, 14, 10, 45, 00)
+        };
+
+        var response = await Http.PostAsJsonAsync($"agendamentos/salas/{salaId}", criarRequest, cancellationToken: TestContext.Current.CancellationToken);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task EditarAgendamento_DeveFalharPorInicioMaiorQueFim()
+    {
+        var salaId = SalasDeTestePredefinidas.SalaReuniaoSP.Id;
+
+        // Arrange
+        LoginAs(UsuariosDeTestePredefinidos.JoaoSilva);
+
+        var criarRequest = new CriarAgendamentoReqBody
+        {
+            Inicio = new DateTime(2025, 02, 14, 10, 00, 00),
+            Fim = new DateTime(2025, 02, 14, 10, 45, 00)
+        };
+
+        var criarResponse = await Http.PostAsJsonAsync($"agendamentos/salas/{salaId}", criarRequest, cancellationToken: TestContext.Current.CancellationToken);
+        var criarResult = await criarResponse.Content.ReadFromJsonAsync<CriarAgendamentoResponse>(cancellationToken: TestContext.Current.CancellationToken);
+        Assert.NotNull(criarResult);
+
+
+        var editarRequest = new EditarAgendamentoReqBody
+        {
+            Inicio = criarRequest.Inicio.AddHours(1),
+            Fim = criarRequest.Fim
+        };
+
+        // Act
+        var response = await Http.PutAsJsonAsync($"agendamentos/{criarResult.AgendamentoId}", editarRequest, cancellationToken: TestContext.Current.CancellationToken);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
 }
